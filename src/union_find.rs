@@ -1,7 +1,7 @@
 use cargo_snippet::snippet;
 
 #[snippet("UnionFind")]
-struct UnionFind {
+pub struct UnionFind {
     size: Vec<usize>,
     par: Vec<usize>,
 }
@@ -55,6 +55,7 @@ impl UnionFind {
     }
 }
 
+#[cfg(test)]
 mod tests {
     use super::UnionFind;
 
