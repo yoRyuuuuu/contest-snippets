@@ -1,11 +1,11 @@
-pub struct Ruisekiwa2D {
+pub struct PrefixSum2D {
     sum: Vec<Vec<i64>>,
     vec: Vec<Vec<i64>>,
     h: usize,
     w: usize,
 }
 
-impl Ruisekiwa2D {
+impl PrefixSum2D {
     pub fn new(h: usize, w: usize) -> Self {
         Self {
             sum: vec![vec![0i64; w + 1]; h + 1],
@@ -35,10 +35,10 @@ impl Ruisekiwa2D {
 
 #[cfg(test)]
 mod tests {
-    use super::Ruisekiwa2D;
+    use super::PrefixSum2D;
     #[test]
-    fn test_ruisekiwa2D() {
-        let mut r = Ruisekiwa2D::new(5, 5);
+    fn test_prefix_sum_2d() {
+        let mut r = PrefixSum2D::new(5, 5);
         let vec = vec![
             vec![1, 2, 3, 4, 5],
             vec![1, 2, 3, 4, 5],
