@@ -4,3 +4,4 @@ pub mod treap;
 pub mod union_find;
 pub mod util;
 pub mod dijkstra;
+pub mod ruisekiwa;
