@@ -66,9 +66,9 @@ mod tests {
         r.build();
 
         for y1 in 0..5 {
-            for y2 in y1 + 1..5 {
+            for y2 in y1 + 1..=5 {
                 for x1 in 0..5 {
-                    for x2 in x1 + 1..5 {
+                    for x2 in x1 + 1..=5 {
                         assert_eq!(r.query(x1, x2, y1, y2), f(x1, x2, y1, y2, &vec));
                     }
                 }
