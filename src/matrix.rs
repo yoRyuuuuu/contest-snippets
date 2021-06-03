@@ -1,29 +1,5 @@
 use std::ops::{Add, AddAssign, Mul, MulAssign, Sub, SubAssign};
-
-pub trait Number {
-    fn zero() -> Self;
-    fn one() -> Self;
-}
-
-impl Number for i64 {
-    fn zero() -> Self {
-        0 as Self
-    }
-
-    fn one() -> Self {
-        1 as Self
-    }
-}
-
-impl Number for f64 {
-    fn zero() -> Self {
-        0 as Self
-    }
-
-    fn one() -> Self {
-        1 as Self
-    }
-}
+use crate::number::Number;
 
 impl<T> Matrix<T> {
     pub fn new(v: Vec<Vec<T>>) -> Self {
