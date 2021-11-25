@@ -12,7 +12,7 @@ impl Edge {
     }
 }
 
-pub fn dijkstra(graph: &Vec<Vec<Edge>>, start: usize) -> Vec<i64> {
+pub fn dijkstra(graph: &[Vec<Edge>], start: usize) -> Vec<i64> {
     use std::collections::BinaryHeap;
     let mut dist: Vec<_> = (0..graph.len()).map(|_| std::i64::MAX).collect();
     let mut heap = BinaryHeap::new();
@@ -40,7 +40,7 @@ pub fn dijkstra(graph: &Vec<Vec<Edge>>, start: usize) -> Vec<i64> {
         }
     }
 
-    return dist;
+    dist
 }
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub struct State {

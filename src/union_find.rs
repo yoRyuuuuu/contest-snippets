@@ -23,14 +23,14 @@ impl UnionFind {
     }
 
     pub fn is_same(&mut self, x: usize, y: usize) -> bool {
-        return self.find_root(x) == self.find_root(y);
+        self.find_root(x) == self.find_root(y)
     }
 
     pub fn find_root(&mut self, x: usize) -> usize {
         if x != self.par[x] {
             self.par[x] = self.find_root(self.par[x]);
         }
-        return self.par[x];
+        self.par[x]
     }
 
     pub fn unite(&mut self, x: usize, y: usize) -> bool {
@@ -46,12 +46,12 @@ impl UnionFind {
             self.par[x] = y;
             self.size[y] += self.size[x];
         }
-        return true;
+        true
     }
 
     pub fn size(&mut self, x: usize) -> usize {
         let x = self.find_root(x);
-        return self.size[x];
+        self.size[x]
     }
 }
 
@@ -64,19 +64,19 @@ mod tests {
         let mut uf = UnionFind::new(5);
         uf.unite(0, 1);
 
-        assert_eq!(uf.is_same(0, 1), true);
+        assert!(uf.is_same(0, 1));
         assert_eq!(uf.size(0), 2);
 
         uf.unite(2, 4);
 
-        assert_eq!(uf.is_same(2, 4), true);
+        assert!(uf.is_same(2, 4));
         assert_eq!(uf.size(2), 2);
 
         uf.unite(0, 2);
 
-        assert_eq!(uf.is_same(0, 2), true);
-        assert_eq!(uf.is_same(0, 4), true);
-        assert_eq!(uf.is_same(1, 2), true);
+        assert!(uf.is_same(0, 2));
+        assert!(uf.is_same(0, 4));
+        assert!(uf.is_same(1, 2));
         assert_eq!(uf.size(0), 4);
     }
 }

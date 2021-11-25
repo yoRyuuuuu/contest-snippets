@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 type Link<T> = Option<Box<Node<T>>>;
 #[derive(Clone, Debug)]
 struct Node<T> {
@@ -27,7 +29,7 @@ impl<T> Node<T> {
 
     fn update(node: Box<Node<T>>) -> Link<T> {
         let mut node = node;
-        node.len = Self::len(&mut node.left) + Self::len(&mut node.right) + 1;
+        node.len = Self::len(&node.left) + Self::len(&node.right) + 1;
         Some(node)
     }
 
@@ -52,7 +54,7 @@ impl<T> Node<T> {
         match node {
             None => (None, None),
             Some(mut node) => {
-                let left_len = Self::len(&mut node.left);
+                let left_len = Self::len(&node.left);
                 if k <= left_len {
                     let (left, right) = Self::split(node.left, k);
                     node.left = right;
@@ -85,15 +87,11 @@ impl<T> Node<T> {
     pub fn get(node: &Link<T>, k: usize) -> Option<&T> {
         match node {
             None => None,
-            Some(node) => {
-                if k == Node::len(&node.left) {
-                    Some(&node.element)
-                } else if k < Node::len(&node.left) {
-                    Self::get(&node.left, k)
-                } else {
-                    Self::get(&node.right, k - Node::len(&node.left) - 1)
-                }
-            }
+            Some(node) => match Node::len(&node.left).cmp(&k) {
+                Ordering::Equal => Some(&node.element),
+                Ordering::Greater => Self::get(&node.left, k),
+                Ordering::Less => Self::get(&node.right, k - Node::len(&node.left) - 1),
+            },
         }
     }
 
@@ -135,6 +133,10 @@ impl<T> TreapSet<T> {
         Node::len(&self.root)
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
     pub fn depth(&mut self) -> usize {
         Node::depth(&self.root)
     }
@@ -143,7 +145,7 @@ impl<T> TreapSet<T> {
     where
         T: Ord,
     {
-        let k = Node::lower_bound(&mut self.root, &element);
+        let k = Node::lower_bound(&self.root, &element);
         let root = self.root.take();
         self.root = match root {
             None => Some(Box::new(Node::new(element, self.next()))),
@@ -155,7 +157,7 @@ impl<T> TreapSet<T> {
     where
         T: Ord,
     {
-        let k = Node::lower_bound(&mut self.root, element);
+        let k = Node::lower_bound(&self.root, element);
         match self.root.take() {
             Some(root) => {
                 self.root = Node::erase_at(Some(root), k);
@@ -182,6 +184,12 @@ impl<T> TreapSet<T> {
             .wrapping_mul(0x12345678deadc0d1)
             .wrapping_add(0x1551);
         self.seed
+    }
+}
+
+impl<T> Default for TreapSet<T> {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -215,7 +223,7 @@ mod tests {
         for x in xs.iter() {
             treap.insert(*x);
         }
-        xs.sort();
+        xs.sort_unstable();
 
         for i in 0..n {
             assert_eq!(treap.get(i), Some(&xs[i]));

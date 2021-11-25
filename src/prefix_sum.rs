@@ -27,7 +27,7 @@ where
         };
         slf.build();
 
-        return slf;
+        slf
     }
 }
 
@@ -83,7 +83,7 @@ where
             len,
         };
         slf.build();
-        return slf;
+        slf
     }
 }
 
@@ -139,7 +139,7 @@ mod tests {
                 }
             }
 
-            return res;
+            res
         };
 
         for y in 0..5 {

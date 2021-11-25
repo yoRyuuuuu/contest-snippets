@@ -1,3 +1,4 @@
+#![allow(clippy::needless_range_loop)]
 pub mod binary_search;
 pub mod matrix;
 pub mod treap;

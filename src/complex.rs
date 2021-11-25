@@ -32,14 +32,12 @@ impl Complex {
     }
 
     pub fn angle(&self) -> f64 {
+        let tmp = self.x / (self.x * self.x + self.y * self.y).sqrt();
+        let angle = tmp.acos() * 180.0 / std::f64::consts::PI;
         if self.y >= 0.0 {
-            let tmp = self.x / (self.x * self.x + self.y * self.y).sqrt();
-            let angle = tmp.acos() * 180.0 / std::f64::consts::PI;
-            return angle;
+            angle
         } else {
-            let tmp = self.x / (self.x * self.x + self.y * self.y).sqrt();
-            let angle = tmp.acos() * 180.0 / std::f64::consts::PI;
-            return 360. - angle;
+            360. - angle
         }
     }
 }

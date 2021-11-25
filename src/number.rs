@@ -5,20 +5,20 @@ pub trait Number {
 
 impl Number for i64 {
     fn zero() -> Self {
-        0 as Self
+        0_i64
     }
 
     fn one() -> Self {
-        1 as Self
+        1_i64
     }
 }
 
 impl Number for f64 {
     fn zero() -> Self {
-        0 as Self
+        0_f64
     }
 
     fn one() -> Self {
-        1 as Self
+        1_f64
     }
 }
